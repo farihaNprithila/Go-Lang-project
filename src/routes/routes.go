@@ -15,7 +15,7 @@ var (
 func Routes() {
 	route := gin.New()
 
-	route.Use(gin.Recovery(), middlewares.Logger())
+	route.Use(gin.Recovery(), middlewares.Logger(), middlewares.BasicAuth())
 
 	route.GET("/users", func(ctx *gin.Context) {
 		ctx.JSON(200, userController.FindAll())
