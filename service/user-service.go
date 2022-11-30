@@ -16,7 +16,7 @@ func New() UserService {
 }
 
 func (service *userService) Save(user entity.User) entity.User {
-	service.users = append(service.users)
+	service.users = append(service.users, user)
 	return user
 }
 
