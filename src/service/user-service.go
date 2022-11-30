@@ -1,6 +1,8 @@
 package service
 
-import "gitlab.com/pragmaticreviews/golang-gin-poc/entity"
+import (
+	"gitlab.com/pragmaticreviews/golang-gin-poc/src/entity"
+)
 
 type UserService interface {
 	Save(user entity.User) entity.User

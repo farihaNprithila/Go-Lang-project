@@ -2,8 +2,8 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"gitlab.com/pragmaticreviews/golang-gin-poc/entity"
-	"gitlab.com/pragmaticreviews/golang-gin-poc/service"
+	"gitlab.com/pragmaticreviews/golang-gin-poc/src/entity"
+	"gitlab.com/pragmaticreviews/golang-gin-poc/src/service"
 )
 
 type UserController interface {
@@ -27,7 +27,10 @@ func (c *controller) FindAll() []entity.User {
 
 func (c *controller) Save(ctx *gin.Context) entity.User {
 	var user entity.User
-	ctx.BindJSON(&user)
+	err := ctx.BindJSON(&user)
+	if err != nil {
+		return entity.User{}
+	}
 	c.service.Save(user)
 	return user
 }
