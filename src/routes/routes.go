@@ -3,6 +3,7 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	"gitlab.com/pragmaticreviews/golang-gin-poc/src/controller"
+	"gitlab.com/pragmaticreviews/golang-gin-poc/src/middlewares"
 	"gitlab.com/pragmaticreviews/golang-gin-poc/src/service"
 )
 
@@ -12,7 +13,10 @@ var (
 )
 
 func Routes() {
-	route := gin.Default()
+	route := gin.New()
+
+	route.Use(gin.Recovery(), middlewares.Logger())
+
 	route.GET("/users", func(ctx *gin.Context) {
 		ctx.JSON(200, userController.FindAll())
 
