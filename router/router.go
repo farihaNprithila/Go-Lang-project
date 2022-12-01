@@ -10,9 +10,9 @@ import (
 )
 
 var (
-	authenticationController authentication.AuthController = authentication.NewAuthController()
-	userService              service.UserService           = service.New()
-	userController           controller.UserController     = controller.New(userService)
+	authenticationController = authentication.NewAuthController()
+	userService              = service.New()
+	userController           = controller.New(userService)
 )
 
 func Router() {

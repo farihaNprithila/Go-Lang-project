@@ -1,0 +1,8 @@
+// For finding current time
+currentTime := time.Now().Format("01-02-2006")
+
+//Customised path and log file
+path := filepath.Join(p, "log", string(currentTime)+".log")
+	f, err := os.Create(path)
+	if err != nil {
+		panic(err)

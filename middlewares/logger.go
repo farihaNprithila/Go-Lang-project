@@ -4,13 +4,23 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"io"
+	"log"
 	"os"
+	"path/filepath"
 	"time"
 )
 
 func SetupLogOutput() {
-	f, _ := os.Create("gin.log")
-	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
+	absolutePath, _ := os.Getwd()
+	path := filepath.Join(absolutePath, "log", "golang.log")
+
+	file, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		panic("File not found")
+	}
+
+	gin.DefaultWriter = io.MultiWriter(file, os.Stdout)
+	log.SetOutput(gin.DefaultWriter)
 }
 
 func Logger() gin.HandlerFunc {
