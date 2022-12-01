@@ -5,6 +5,7 @@ import (
 	"gitlab.com/pragmaticreviews/golang-gin-poc/src/controller"
 	"gitlab.com/pragmaticreviews/golang-gin-poc/src/middlewares"
 	"gitlab.com/pragmaticreviews/golang-gin-poc/src/service"
+	"net/http"
 )
 
 var (
@@ -22,7 +23,12 @@ func Routes() {
 
 	})
 	route.POST("/users", func(ctx *gin.Context) {
-		ctx.JSON(200, userController.Save(ctx))
+		err := userController.Save(ctx)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		} else {
+			ctx.JSON(http.StatusOK, gin.H{"message": "User input was valid"})
+		}
 	})
 
 	err := route.Run(":8080")
