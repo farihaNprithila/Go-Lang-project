@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
+	"gitlab.com/pragmaticreviews/golang-gin-poc/src/authentication/authController"
 	"gitlab.com/pragmaticreviews/golang-gin-poc/src/controller"
 	"gitlab.com/pragmaticreviews/golang-gin-poc/src/middlewares"
 	"gitlab.com/pragmaticreviews/golang-gin-poc/src/service"
@@ -9,17 +10,23 @@ import (
 )
 
 var (
-	userService    service.UserService       = service.New()
-	userController controller.UserController = controller.New(userService)
+	authenticationController authController.AuthController = authController.NewAuthController()
+	userService              service.UserService           = service.New()
+	userController           controller.UserController     = controller.New(userService)
 )
 
 func Routes() {
 	route := gin.New()
 
-	route.Use(gin.Recovery(), middlewares.Logger(), middlewares.BasicAuth())
+	route.Use(gin.Recovery(), middlewares.Logger())
 
 	apiRoutes := route.Group("/api")
 	{
+		authRoutes := apiRoutes.Group("/auth")
+		{
+			authRoutes.POST("/login", authenticationController.Login)
+			authRoutes.POST("/register", authenticationController.Register)
+		}
 		apiRoutes.GET("/users", func(ctx *gin.Context) {
 			ctx.JSON(200, userController.FindAll())
 
