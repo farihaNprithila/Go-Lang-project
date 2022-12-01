@@ -18,18 +18,26 @@ func Routes() {
 
 	route.Use(gin.Recovery(), middlewares.Logger(), middlewares.BasicAuth())
 
-	route.GET("/users", func(ctx *gin.Context) {
-		ctx.JSON(200, userController.FindAll())
+	apiRoutes := route.Group("/api")
+	{
+		apiRoutes.GET("/users", func(ctx *gin.Context) {
+			ctx.JSON(200, userController.FindAll())
 
-	})
-	route.POST("/users", func(ctx *gin.Context) {
-		err := userController.Save(ctx)
-		if err != nil {
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		} else {
-			ctx.JSON(http.StatusOK, gin.H{"message": "User input was valid"})
-		}
-	})
+		})
+		apiRoutes.POST("/users", func(ctx *gin.Context) {
+			err := userController.Save(ctx)
+			if err != nil {
+				ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			} else {
+				ctx.JSON(http.StatusOK, gin.H{"message": "User input was valid"})
+			}
+		})
+	}
+
+	viewRoutes := route.Group("/view")
+	{
+		viewRoutes.GET("/users", userController.ShowAll)
+	}
 
 	err := route.Run(":8080")
 	if err != nil {
