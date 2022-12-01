@@ -2,8 +2,8 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"gitlab.com/pragmaticreviews/golang-gin-poc/src/entity"
-	"gitlab.com/pragmaticreviews/golang-gin-poc/src/service"
+	"gitlab.com/pragmaticreviews/golang-gin-poc/entity"
+	"gitlab.com/pragmaticreviews/golang-gin-poc/service"
 	"net/http"
 )
 

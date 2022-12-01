@@ -1,21 +1,21 @@
-package routes
+package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"gitlab.com/pragmaticreviews/golang-gin-poc/src/authentication/authController"
-	"gitlab.com/pragmaticreviews/golang-gin-poc/src/controller"
-	"gitlab.com/pragmaticreviews/golang-gin-poc/src/middlewares"
-	"gitlab.com/pragmaticreviews/golang-gin-poc/src/service"
+	"gitlab.com/pragmaticreviews/golang-gin-poc/controller"
+	"gitlab.com/pragmaticreviews/golang-gin-poc/controller/authentication"
+	"gitlab.com/pragmaticreviews/golang-gin-poc/middlewares"
+	"gitlab.com/pragmaticreviews/golang-gin-poc/service"
 	"net/http"
 )
 
 var (
-	authenticationController authController.AuthController = authController.NewAuthController()
+	authenticationController authentication.AuthController = authentication.NewAuthController()
 	userService              service.UserService           = service.New()
 	userController           controller.UserController     = controller.New(userService)
 )
 
-func Routes() {
+func Router() {
 	route := gin.New()
 
 	route.Use(gin.Recovery(), middlewares.Logger())

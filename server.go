@@ -2,8 +2,8 @@ package main
 
 import (
 	"gitlab.com/pragmaticreviews/golang-gin-poc/config"
-	"gitlab.com/pragmaticreviews/golang-gin-poc/src/middlewares"
-	"gitlab.com/pragmaticreviews/golang-gin-poc/src/routes"
+	"gitlab.com/pragmaticreviews/golang-gin-poc/middlewares"
+	"gitlab.com/pragmaticreviews/golang-gin-poc/router"
 	"gorm.io/gorm"
 )
 
@@ -14,5 +14,5 @@ func main() {
 	middlewares.SetupLogOutput()
 	defer config.CloseDatabaseConnection(db)
 
-	routes.Routes()
+	router.Router()
 }

@@ -1,7 +1,7 @@
 package service
 
 import (
-	"gitlab.com/pragmaticreviews/golang-gin-poc/src/entity"
+	"gitlab.com/pragmaticreviews/golang-gin-poc/entity"
 )
 
 type UserService interface {
